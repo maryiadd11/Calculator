@@ -1,18 +1,8 @@
 package service;
 
-import lombok.*;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 public class CalcService {
 
-    String num1;
-    String num2;
-    String type;
-
-    public double run() {
+    public static double run (String num1, String num2, String type) {
         double result = 0;
         switch (type) {
             case "sum":
@@ -31,19 +21,19 @@ public class CalcService {
         return result;
     }
 
-    private double sum (double a, double b) {
+    private static double sum(double a, double b) {
         return a+b;
     }
 
-    private double minus (double a, double b) {
+    private static double minus (double a, double b) {
         return a-b;
     }
 
-    private double multiply (double a, double b) {
+    private static double multiply (double a, double b) {
         return a*b;
     }
 
-    private double divide (double a, double b) {
+    private static double divide (double a, double b) {
         return a/b;
     }
 }

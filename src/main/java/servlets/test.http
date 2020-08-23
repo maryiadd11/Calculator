@@ -2,11 +2,11 @@ GET http://localhost:8080/?num1=22&num2=33&type=sum
 
 ###
 
-GET http://localhost:8080/?num1=22&num2=21&type=minus
+GET http://localhost:8080/?num1=22&num2=345&type=minus
 
 ###
 
-GET http://localhost:8080/?num1=10&num2=5&type=multiply
+GET http://localhost:8080/?num1=34&num2=66&type=multiply
 
 ###
 
