@@ -1,10 +1,13 @@
 package servlets;
 
+import entity.Operation;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 import static service.CalcService.run;
 
@@ -18,6 +21,16 @@ public class CalcServlet extends HttpServlet {
         String type = req.getParameter("type");
         double result = run(num1, num2, type);
         resp.getWriter().println(result);
+
+        Operation operation = new Operation (num1, num2, type, result);
+        List <Operation> operations = (List<Operation>) getServletContext().getAttribute("operations");
+        operations.add(operation);
+
+        for (Operation op : operations) {
+            if (operations != null) {
+                req.getSession().setAttribute("operation", op);
+            }
+        }
     }
 
 }

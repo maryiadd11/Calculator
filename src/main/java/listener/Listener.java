@@ -18,12 +18,16 @@ public class Listener implements ServletContextListener,
 
     public void contextInitialized(ServletContextEvent sce) {
         sce.getServletContext().setAttribute("users", new ArrayList<>());
+        sce.getServletContext().setAttribute("operations", new ArrayList<>());
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
     }
 
     public void sessionCreated(HttpSessionEvent se) {
+       // se.getSession().setAttribute("operations", new ArrayList<>());
+        // была идея хранить историю операций в сессии но наверное будет лучше в апликейшн контексте
+        // чтобы залогиненный пользователь позже тоже смог просмотреть
     }
 
     public void sessionDestroyed(HttpSessionEvent se) {

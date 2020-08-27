@@ -25,3 +25,7 @@ POST http://localhost:8080/auth
 Content-Type: application/x-www-form-urlencoded
 
 login=test&password=12345678
+
+###
+
+GET http://localhost:8080/history
