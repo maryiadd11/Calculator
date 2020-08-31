@@ -14,15 +14,20 @@ import java.util.List;
 public class RegistrationServlet extends HttpServlet {
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/reg.jsp").forward(req,resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
-        String password = req.getParameter("password");
         String name = req.getParameter("name");
+        String password = req.getParameter("password");
 
         User user = new User(login, name, password);
-
         List <User> users = (List<User>) getServletContext().getAttribute("users");
-
         users.add(user);
+
+        resp.sendRedirect("/");
     }
 }

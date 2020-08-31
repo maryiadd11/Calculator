@@ -14,6 +14,11 @@ import java.util.List;
 public class AuthorizationServlet extends HttpServlet {
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/auth.jsp").forward(req,resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
@@ -23,6 +28,9 @@ public class AuthorizationServlet extends HttpServlet {
         for (User user : users) {
             if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
                 req.getSession().setAttribute("user", user);
+                resp.sendRedirect("/");
+            } else {
+                req.getRequestDispatcher("/auth.jsp").forward(req,resp);
             }
         }
     }

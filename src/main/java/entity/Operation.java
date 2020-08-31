@@ -1,6 +1,8 @@
 package entity;
 
 public class Operation {
+    private static int incId = 1;
+    private int id = incId++;
 
     String num1;
     String num2;
@@ -15,6 +17,14 @@ public class Operation {
     }
 
     public Operation() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNum1() {
@@ -52,7 +62,8 @@ public class Operation {
     @Override
     public String toString() {
         return "Operation{" +
-                "num1='" + num1 + '\'' +
+                "id=" + id +
+                ", num1='" + num1 + '\'' +
                 ", num2='" + num2 + '\'' +
                 ", type='" + type + '\'' +
                 ", result=" + result +

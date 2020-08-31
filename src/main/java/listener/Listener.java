@@ -25,9 +25,6 @@ public class Listener implements ServletContextListener,
     }
 
     public void sessionCreated(HttpSessionEvent se) {
-       // se.getSession().setAttribute("operations", new ArrayList<>());
-        // была идея хранить историю операций в сессии но наверное будет лучше в апликейшн контексте
-        // чтобы залогиненный пользователь позже тоже смог просмотреть
     }
 
     public void sessionDestroyed(HttpSessionEvent se) {

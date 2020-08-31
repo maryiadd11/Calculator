@@ -1,7 +1,6 @@
 package servlets;
 
 import entity.Operation;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,11 +14,6 @@ public class OperationsHistoryServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        List <Operation> operations = (List<Operation>) getServletContext().getAttribute("operations");
-
-        for (Operation op : operations) {
-            resp.getWriter().println(op);
-        }
+        req.getRequestDispatcher("/history.jsp").forward(req, resp);
     }
 }

@@ -7,13 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
-@WebServlet(urlPatterns = "/home")
-public class HomeServlet extends HttpServlet {
+@WebServlet (urlPatterns = "/logout")
+public class LogoutServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        resp.getWriter().println("Home page");
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getSession().invalidate();
+        resp.sendRedirect("/");
     }
-
 }
