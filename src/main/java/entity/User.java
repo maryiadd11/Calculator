@@ -2,8 +2,8 @@ package entity;
 
 public class User {
 
-    private static int incId = 1;
-    private int id = incId++;
+   // private static int incId = 1;
+    private int id;
 
     private String login;
     private String name;
