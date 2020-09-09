@@ -8,14 +8,24 @@ import java.util.List;
 public class UserDBDao implements UserDao {
     private Connection connection;
 
-    private static final String CREATE_USER = "INSERT INTO users VALUES (default, ?, ?, ?)";
+    private static final String CREATE_USER = "INSERT INTO users VALUES (null, ?, ?, ?)";
     private static final String GET_BY_ID = "SELECT * FROM users WHERE id = ?";
     private static final String GET_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
     private static final String GET_ALL = "SELECT * FROM users";
     private static final String UPDATE_BY_ID = "UPDATE users SET login = ?, name = ?, password = ? WHERE id = ?";
-    private static final String DELETE_BY_ID = "DELETE * FROM users WHERE id = ?";
+    private static final String DELETE_BY_ID = "DELETE FROM users WHERE id = ?";
 
-    public UserDBDao(Connection connection) {
+    private static UserDao instance = null;
+
+    public static UserDao getInstance (Connection connection) {
+        if (instance == null) {
+            return new UserDBDao(connection);
+        } else {
+            return instance;
+        }
+    }
+
+    private UserDBDao(Connection connection) {
         this.connection = connection;
     }
 
@@ -23,6 +33,7 @@ public class UserDBDao implements UserDao {
     public void create(User user) {
         try {
             PreparedStatement statement = connection.prepareStatement(CREATE_USER);
+            //statement.setLong(1, user.getId());
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getName());
             statement.setString(3, user.getPassword());
@@ -40,8 +51,9 @@ public class UserDBDao implements UserDao {
            ResultSet resultSet = statement.executeQuery();
            if (resultSet.next()) {
                return new User(
-                       resultSet.getString("name"),
+                       resultSet.getLong("id"),
                        resultSet.getString("login"),
+                       resultSet.getString("name"),
                        resultSet.getString("password"));
            }
        } catch (SQLException throwables) {
@@ -58,8 +70,9 @@ public class UserDBDao implements UserDao {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return new User(
-                        resultSet.getString("name"),
+                        resultSet.getLong("id"),
                         resultSet.getString("login"),
+                        resultSet.getString("name"),
                         resultSet.getString("password"));
             }
         } catch (SQLException throwables) {
@@ -76,8 +89,8 @@ public class UserDBDao implements UserDao {
             ResultSet resultSet = statement.executeQuery(GET_ALL);
             while (resultSet.next()) {
                 users.add(new User(
-                        resultSet.getString("name"),
                         resultSet.getString("login"),
+                        resultSet.getString("name"),
                         resultSet.getString("password")));
             }
         } catch (SQLException throwables) {
@@ -119,7 +132,7 @@ public class UserDBDao implements UserDao {
          try {
              PreparedStatement statement = connection.prepareStatement(GET_BY_ID);
              statement.setLong(1, id);
-             statement.executeQuery().next();
+             return statement.executeQuery().next();
          } catch (SQLException throwables) {
              throwables.printStackTrace();
          }
@@ -131,23 +144,23 @@ public class UserDBDao implements UserDao {
         try {
             PreparedStatement statement = connection.prepareStatement(GET_BY_LOGIN);
             statement.setString(1, login);
-            statement.executeQuery().next();
+            return statement.executeQuery().next();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return false;
     }
 
-    public static void main(String[] args) throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", "root", "password");
-        UserDao userDao = new UserDBDao(connection);
-        userDao.create(new User("", "", ""));
-        //System.out.println(userDao.getById(1));
-        //System.out.println(userDao.getByLogin("test"));
-        //System.out.println(userDao.getAll());
-        //userDao.update(new User(2, "hiuafs", "hbvsbk", "vbj"));
-        //userDao.deleteById(2);
-        //System.out.println(userDao.containsById(1));
-        //System.out.println(userDao.containsByLogin("TEST"));
-    }
+//    public static void main(String[] args) throws SQLException {
+//        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", "root", "password");
+//        UserDao userDao = new UserDBDao(connection);
+//        userDao.create(new User("", "", ""));
+//        System.out.println(userDao.getById(6));
+//        System.out.println(userDao.getByLogin("test"));
+//        System.out.println(userDao.getAll());
+//        userDao.update(new User(2, "hiuafs", "hbvsbk", "vbj"));
+//        userDao.deleteById(9);
+//        System.out.println(userDao.containsById(1));
+//        System.out.println(userDao.containsByLogin("TEST"));
+//    }
 }

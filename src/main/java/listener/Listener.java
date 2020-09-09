@@ -7,6 +7,9 @@ import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import javax.servlet.http.HttpSessionBindingEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @WebListener()
@@ -25,9 +28,21 @@ public class Listener implements ServletContextListener,
     }
 
     public void sessionCreated(HttpSessionEvent se) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            se.getSession().setAttribute("connection", DriverManager.getConnection("jdbc:mysql://localhost:3306/users", "root", "password"));
+        } catch (SQLException|ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     public void sessionDestroyed(HttpSessionEvent se) {
+        Connection connection = (Connection) se.getSession().getAttribute("connection");
+        try {
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     public void attributeAdded(HttpSessionBindingEvent sbe) {

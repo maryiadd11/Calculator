@@ -1,6 +1,8 @@
 package servlets;
 
 import entity.User;
+import service.UserServiceImplementation;
+import service.exception.DuplicateUserException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.List;
 
 @WebServlet (urlPatterns = "/reg")
@@ -25,8 +28,12 @@ public class RegistrationServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         User user = new User(login, name, password);
-        List <User> users = (List<User>) getServletContext().getAttribute("users");
-        users.add(user);
+
+        try {
+            UserServiceImplementation.getInstance((Connection) req.getSession().getAttribute("connection")).create(user);
+        } catch (DuplicateUserException e) {
+            req.getRequestDispatcher("/reg.jsp").forward(req,resp);
+        }
 
         resp.sendRedirect("/");
     }

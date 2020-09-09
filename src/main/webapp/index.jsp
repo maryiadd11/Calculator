@@ -9,6 +9,7 @@
 Hello ${sessionScope.user.name}
 
 <c:if test="${sessionScope.user != null}">
+    <a href="/account">Edit Account</a>
     <a href="/calc">Calculator</a>
     <a href="/history">Calculation History</a>
     <a href="/logout">Logout</a>
