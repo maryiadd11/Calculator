@@ -1,9 +1,8 @@
-package dao;
+package service.exceptions;
 
 public class UserNotFoundException extends RuntimeException {
 
     public UserNotFoundException() {
-        super();
     }
 
     public UserNotFoundException(String message) {
@@ -18,7 +17,7 @@ public class UserNotFoundException extends RuntimeException {
         super(cause);
     }
 
-    protected UserNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public UserNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

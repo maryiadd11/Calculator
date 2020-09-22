@@ -9,5 +9,6 @@
     <input type="text" name="password" placeholder="enter password">
     <button>Authorization</button>
 </form>
+${requestScope.message}
 </body>
 </html>

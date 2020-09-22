@@ -1,21 +1,25 @@
 package servlets;
 
 import entity.User;
-
+import service.UserService;
+import service.UserServiceImplementation;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
+import java.sql.Connection;
 
-@WebServlet (urlPatterns = "/auth")
+@WebServlet (name = "AuthServlet", urlPatterns = "/auth")
 public class AuthorizationServlet extends HttpServlet {
+
+    private static final String INVALID_LOGIN = "Invalid login";
+    private static final String INVALID_PASSWORD = "Invalid password";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/auth.jsp").forward(req,resp);
+        req.getRequestDispatcher("/auth.jsp").forward(req, resp);
     }
 
     @Override
@@ -23,16 +27,20 @@ public class AuthorizationServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        List<User> users = (List<User>) getServletContext().getAttribute("users");
-
-        for (User user : users) {
-            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
+        UserService userService = UserServiceImplementation.getInstance((Connection) req.getSession().getAttribute("connection"));
+        User user;
+        if (userService.containsByLogin(login)) {
+            user = userService.getByLogin(login);
+            if (user.getPassword().equals(password)) {
                 req.getSession().setAttribute("user", user);
                 resp.sendRedirect("/");
+                return;
             } else {
-                req.getRequestDispatcher("/auth.jsp").forward(req,resp);
+                req.setAttribute("password", INVALID_PASSWORD);
             }
+        } else {
+            req.setAttribute("login", INVALID_LOGIN);
         }
+        req.getRequestDispatcher("/auth.jsp").forward(req,resp);
     }
-
 }
