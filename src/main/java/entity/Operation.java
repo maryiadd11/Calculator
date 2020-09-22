@@ -1,45 +1,80 @@
 package entity;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import java.util.Date;
+
+@AllArgsConstructor
+@NoArgsConstructor
 public class Operation {
-    private static int incId = 1;
-    private int id = incId++;
 
-    String num1;
-    String num2;
-    String type;
-    Double result;
+    private long id;
+    private double num1;
+    private double num2;
+    private String type;
+    private double result;
+    private long userId;
 
-    public Operation(String num1, String num2, String type, Double result) {
+    public Operation(String num1, String num2, String type, double result, long userId) {
+        this.num1 = Double.parseDouble(num1);
+        this.num2 = Double.parseDouble(num2);
+        this.type = type;
+        this.result = result;
+        this.userId = userId;
+    }
+
+    public Operation(double num1, double num2, String type, double result) {
         this.num1 = num1;
         this.num2 = num2;
         this.type = type;
         this.result = result;
     }
 
-    public Operation() {
+    public Operation(long id, double num1, double num2, String type, double result) {
+        this.id = id;
+        this.num1 = num1;
+        this.num2 = num2;
+        this.type = type;
+        this.result = result;
     }
 
-    public int getId() {
+    public Operation(long id, String num1, String num2, String type, double result) {
+        this.id = id;
+        this.num1 = Double.parseDouble(num1);
+        this.num2 = Double.parseDouble(num2);
+        this.type = type;
+        this.result = result;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getNum1() {
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public double getNum1() {
         return num1;
     }
 
-    public void setNum1(String num1) {
+    public void setNum1(double num1) {
         this.num1 = num1;
     }
 
-    public String getNum2() {
+    public double getNum2() {
         return num2;
     }
 
-    public void setNum2(String num2) {
+    public void setNum2(double num2) {
         this.num2 = num2;
     }
 
@@ -51,11 +86,11 @@ public class Operation {
         this.type = type;
     }
 
-    public Double getResult() {
+    public double getResult() {
         return result;
     }
 
-    public void setResult(Double result) {
+    public void setResult(double result) {
         this.result = result;
     }
 
@@ -63,10 +98,11 @@ public class Operation {
     public String toString() {
         return "Operation{" +
                 "id=" + id +
-                ", num1='" + num1 + '\'' +
-                ", num2='" + num2 + '\'' +
+                ", num1=" + num1 +
+                ", num2=" + num2 +
                 ", type='" + type + '\'' +
                 ", result=" + result +
+                ", userId=" + userId +
                 '}';
     }
 }

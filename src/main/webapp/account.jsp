@@ -6,10 +6,14 @@
 </head>
 <body>
     <form action="/account" method="post">
-        <input name="name" type="text" placeholder="Enter new name" required minlength="3" maxlength="16">
-        <input name="password" type="password" placeholder="Enter new password" required minlength="5" maxlength="16">
+        <input name="value" type="text" placeholder="login" required minlength="3" maxlength="16">
+        <select name="field">
+            <option value="name">Update name</option>
+            <option value="password">Update password</option>
+        </select>
         <button>Update</button>
     </form>
-<a href="/">Home</a>
+    ${requestScope.message}
+    <a href="/">Home</a>
 </body>
 </html>

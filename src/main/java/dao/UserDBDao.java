@@ -1,5 +1,7 @@
 package dao;
 
+import dao.exceptions.NoResultException;
+import dao.exceptions.UserNotFoundException;
 import entity.User;
 import java.sql.*;
 import java.util.ArrayList;
@@ -33,7 +35,6 @@ public class UserDBDao implements UserDao {
     public void create(User user) {
         try {
             PreparedStatement statement = connection.prepareStatement(CREATE_USER);
-            //statement.setLong(1, user.getId());
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getName());
             statement.setString(3, user.getPassword());
@@ -152,15 +153,15 @@ public class UserDBDao implements UserDao {
     }
 
 //    public static void main(String[] args) throws SQLException {
-//        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", "root", "password");
+//        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/new", "root", "password");
 //        UserDao userDao = new UserDBDao(connection);
 //        userDao.create(new User("", "", ""));
-//        System.out.println(userDao.getById(6));
+//        System.out.println(userDao.getById(1));
 //        System.out.println(userDao.getByLogin("test"));
 //        System.out.println(userDao.getAll());
 //        userDao.update(new User(2, "hiuafs", "hbvsbk", "vbj"));
 //        userDao.deleteById(9);
 //        System.out.println(userDao.containsById(1));
-//        System.out.println(userDao.containsByLogin("TEST"));
+//        System.out.println(userDao.containsByLogin("t1"));
 //    }
 }

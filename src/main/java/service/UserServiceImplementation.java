@@ -3,8 +3,8 @@ package service;
 import dao.UserDBDao;
 import dao.UserDao;
 import entity.User;
-import service.exception.DuplicateUserException;
-import service.exception.UserNotFoundException;
+import service.exceptions.DuplicateUserException;
+import service.exceptions.UserNotFoundException;
 import java.sql.Connection;
 import java.util.List;
 
@@ -71,6 +71,10 @@ public class UserServiceImplementation implements UserService{
 
     @Override
     public void update(String name, long id) {
+    }
 
+    @Override
+    public boolean containsByLogin(String login) {
+        return userDao.containsByLogin(login);
     }
 }

@@ -6,22 +6,17 @@
     <title>History</title>
 </head>
 <body>
-
-<c:if test="${sessionScope.operation == null}">
-    <p>История операций пуста</p>
-</c:if>
-
-<c:if test="${sessionScope.operation != null}">
-    <table>
+<table>
+    <c:forEach items="${requestScope.report}" var="operation">
         <tr>
-            <td>Id = ${sessionScope.operation.id}</td>
-            <td>Первое число = ${sessionScope.operation.num1}</td>
-            <td>Второе число = ${sessionScope.operation.num2}</td>
-            <td>Тип операции = ${sessionScope.operation.type}</td>
-            <td>Результат = ${sessionScope.operation.result}</td>
+            <td><div>id = ${operation.id}</div></td>
+            <td><div>num_1 = ${operation.num1}</div></td>
+            <td><div>num_2 = ${operation.num2}</div></td>
+            <td><div>operation_type = ${operation.type}</div></td>
+            <td><div>result = ${operation.result}</div></td>
         </tr>
-    </table>
-</c:if>
+    </c:forEach>
+</table>
 
 <a href="/calc">Открыть калькулятор</a>
 

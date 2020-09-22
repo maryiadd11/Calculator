@@ -1,4 +1,4 @@
-package service.exception;
+package service.exceptions;
 
 public class DuplicateUserException extends RuntimeException {
     @Override
